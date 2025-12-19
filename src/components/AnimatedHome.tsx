@@ -69,7 +69,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
             >
               Contribute
             </a>{" "}
-            to open source (Go, and more)
+            to open source
           </li>
           <li>Build side projects and prototype new ideas</li>
         </ul>
