@@ -23,7 +23,7 @@ body {
 
 /* Dark mode - matches v4 */
 .dark {
-  --background: #12121a;
+  --background: #0a0a0f;
   --foreground: #ffffff;
   --muted: #a0a0a0;
   --border: #3a3a4e;
