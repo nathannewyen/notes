@@ -19,7 +19,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
   const [latestPostsRef, isLatestPostsVisible] = useScrollAnimation(0.1);
 
   return (
-    <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
       {/* Hero Section - uses CSS animation for initial load */}
       <section className="mb-8 sm:mb-16 animate-fadeIn">
         <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1A2234] dark:text-white">

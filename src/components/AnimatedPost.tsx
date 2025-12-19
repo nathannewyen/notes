@@ -21,7 +21,7 @@ export function AnimatedPost({
   const [articleRef, isArticleVisible] = useScrollAnimation(0.05);
 
   return (
-    <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
       {/* Back link - immediate fade in */}
       <Link
         href="/"
@@ -40,24 +40,20 @@ export function AnimatedPost({
         <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
           {tags && tags.length > 0 && (
             <>
-              <span className="text-[#888] dark:text-[#a0a0a0]">[</span>
-              <div className="flex items-center gap-2">
-                {tags.map((tag, index) => (
-                  <span key={tag}>
-                    <span className="text-[#007bff]">{tag}</span>
-                    {index < tags.length - 1 && (
-                      <span className="text-[#888] dark:text-[#a0a0a0] ml-2">
-                        |
-                      </span>
-                    )}
+              <div className="flex flex-wrap items-center gap-1.5">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-0.5 rounded-full bg-[#f0f0f0] dark:bg-[#1a1a2e] text-[#555] dark:text-[#a0a0a0] text-xs"
+                  >
+                    {tag}
                   </span>
                 ))}
               </div>
-              <span className="text-[#888] dark:text-[#a0a0a0]">]</span>
-              <span className="text-[#888] dark:text-[#a0a0a0]">·</span>
+              <span className="text-[#ccc] dark:text-[#555]">·</span>
             </>
           )}
-          <span className="italic text-[#888] dark:text-[#a0a0a0]">
+          <span className="text-[#888] dark:text-[#a0a0a0]">
             {readingTime}
           </span>
         </div>
