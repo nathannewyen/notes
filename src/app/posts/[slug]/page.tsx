@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
-import { getPostBySlug, getPostSlugs, formatDate } from "@/lib/posts";
+import { getPostBySlug, getPostSlugs } from "@/lib/posts";
+import { CodeBlock } from "@/components/CodeBlock";
 
 /* Generate static params for all posts */
 export async function generateStaticParams() {
@@ -35,19 +36,19 @@ export async function generateMetadata({
 const mdxComponents = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
-      className="text-3xl font-bold mt-8 mb-4 text-[#1A2234] dark:text-white"
+      className="text-2xl sm:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-[#1A2234] dark:text-white"
       {...props}
     />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
-      className="text-2xl font-bold mt-8 mb-4 text-[#1A2234] dark:text-white"
+      className="text-xl sm:text-2xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-[#1A2234] dark:text-white"
       {...props}
     />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      className="text-xl font-bold mt-6 mb-3 text-[#1A2234] dark:text-white"
+      className="text-lg sm:text-xl font-bold mt-5 sm:mt-6 mb-2 sm:mb-3 text-[#1A2234] dark:text-white"
       {...props}
     />
   ),
@@ -67,7 +68,10 @@ const mdxComponents = {
     <li className="text-[#1A2234] dark:text-[#a0a0a0]" {...props} />
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a className="text-[#007bff] hover:underline" {...props} />
+    <a
+      className="text-[#1A2234] dark:text-white font-bold underline underline-offset-4 decoration-2"
+      {...props}
+    />
   ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
@@ -82,10 +86,7 @@ const mdxComponents = {
     />
   ),
   pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre
-      className="bg-[#0d1117] p-4 rounded-lg overflow-x-auto my-4 text-sm"
-      {...props}
-    />
+    <CodeBlock {...props} />
   ),
   hr: () => <hr className="border-[#e0e0e0] dark:border-[#3a3a4e] my-8" />,
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
@@ -117,23 +118,23 @@ export default async function PostPage({
   }
 
   return (
-    <main className="max-w-2xl mx-auto px-6 py-16">
+    <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
       {/* Back link */}
       <Link
         href="/"
-        className="text-[#888] dark:text-[#a0a0a0] hover:text-[#1A2234] dark:hover:text-white transition-colors mb-8 inline-block"
+        className="text-sm sm:text-base text-[#888] dark:text-[#a0a0a0] hover:text-[#1A2234] dark:hover:text-white transition-colors mb-6 sm:mb-8 inline-block"
       >
         &larr; Back to home
       </Link>
 
       {/* Post header */}
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold mb-3 text-[#1A2234] dark:text-white">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-[#1A2234] dark:text-white">
           {post.title}
         </h1>
 
         {/* Tags and reading time - Eugene Yan style */}
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
           {post.tags && post.tags.length > 0 && (
             <>
               <span className="text-[#888] dark:text-[#a0a0a0]">[</span>

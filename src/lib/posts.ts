@@ -56,9 +56,9 @@ export function getAllPosts(): PostMeta[] {
   const posts = slugs
     .map((slug) => {
       const post = getPostBySlug(slug);
-      // Return only metadata, not content
-      const { content: _content, ...meta } = post;
-      return meta;
+      /* Return only metadata, exclude content from the returned object */
+      const { slug: postSlug, title, date, description, tags, readingTime: readTime } = post;
+      return { slug: postSlug, title, date, description, tags, readingTime: readTime };
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 

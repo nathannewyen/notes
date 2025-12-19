@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* Enable dark mode with class strategy - matches v4 */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -13,12 +14,27 @@ body {
   font-family: var(--font-space-mono), ui-monospace, monospace;
 }
 
-/* Light mode - default */
+/* Light mode - default (v4 colors) */
 :root {
   --background: #ffffff;
   --foreground: #1A2234;
   --muted: #888;
   --border: #e0e0e0;
+  --radius: 0.625rem;
+  --card: #ffffff;
+  --card-foreground: #1A2234;
+  --popover: #ffffff;
+  --popover-foreground: #1A2234;
+  --primary: #1A2234;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #1A2234;
+  --muted-foreground: #888;
+  --accent: #f5f5f5;
+  --accent-foreground: #1A2234;
+  --destructive: #ef4444;
+  --input: #e0e0e0;
+  --ring: #1A2234;
 }
 
 /* Dark mode - matches v4 */
@@ -27,6 +43,20 @@ body {
   --foreground: #ffffff;
   --muted: #a0a0a0;
   --border: #3a3a4e;
+  --card: #12121a;
+  --card-foreground: #ffffff;
+  --popover: #12121a;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #0a0a0f;
+  --secondary: #1a1a2e;
+  --secondary-foreground: #ffffff;
+  --muted-foreground: #a0a0a0;
+  --accent: #1a1a2e;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --input: #3a3a4e;
+  --ring: #ffffff;
 }
 
 @theme inline {
@@ -36,6 +66,24 @@ body {
   --color-border: var(--border);
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-space-mono), ui-monospace, monospace;
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 /* Code block styling for rehype-pretty-code */
@@ -44,8 +92,15 @@ pre > code {
 }
 
 pre [data-line] {
-  padding: 0 1rem;
+  padding: 0 0.75rem;
   border-left: 2px solid transparent;
+}
+
+/* Larger padding on larger screens */
+@media (min-width: 640px) {
+  pre [data-line] {
+    padding: 0 1rem;
+  }
 }
 
 pre [data-highlighted-line] {
@@ -62,7 +117,23 @@ code[data-line-numbers] > [data-line]::before {
   content: counter(line);
   display: inline-block;
   width: 1rem;
-  margin-right: 1.5rem;
+  margin-right: 1rem;
   text-align: right;
   color: #6b7280;
+}
+
+/* Larger margin on larger screens */
+@media (min-width: 640px) {
+  code[data-line-numbers] > [data-line]::before {
+    margin-right: 1.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
