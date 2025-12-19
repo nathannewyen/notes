@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import { getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { CodeBlock } from "@/components/CodeBlock";
+import { AnimatedPost } from "@/components/AnimatedPost";
 
 /* Generate static params for all posts */
 export async function generateStaticParams() {
@@ -118,60 +118,20 @@ export default async function PostPage({
   }
 
   return (
-    <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
-      {/* Back link */}
-      <Link
-        href="/"
-        className="text-sm sm:text-base text-[#888] dark:text-[#a0a0a0] hover:text-[#1A2234] dark:hover:text-white transition-colors mb-6 sm:mb-8 inline-block"
-      >
-        &larr; Back to home
-      </Link>
-
-      {/* Post header */}
-      <header className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-[#1A2234] dark:text-white">
-          {post.title}
-        </h1>
-
-        {/* Tags and reading time - Eugene Yan style */}
-        <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
-          {post.tags && post.tags.length > 0 && (
-            <>
-              <span className="text-[#888] dark:text-[#a0a0a0]">[</span>
-              <div className="flex items-center gap-2">
-                {post.tags.map((tag, index) => (
-                  <span key={tag}>
-                    <span className="text-[#007bff]">{tag}</span>
-                    {index < post.tags.length - 1 && (
-                      <span className="text-[#888] dark:text-[#a0a0a0] ml-2">
-                        |
-                      </span>
-                    )}
-                  </span>
-                ))}
-              </div>
-              <span className="text-[#888] dark:text-[#a0a0a0]">]</span>
-              <span className="text-[#888] dark:text-[#a0a0a0]">·</span>
-            </>
-          )}
-          <span className="italic text-[#888] dark:text-[#a0a0a0]">
-            {post.readingTime}
-          </span>
-        </div>
-      </header>
-
-      {/* Post content */}
-      <article>
-        <MDXRemote
-          source={post.content}
-          components={mdxComponents}
-          options={{
-            mdxOptions: {
-              rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]],
-            },
-          }}
-        />
-      </article>
-    </main>
+    <AnimatedPost
+      title={post.title}
+      tags={post.tags}
+      readingTime={post.readingTime}
+    >
+      <MDXRemote
+        source={post.content}
+        components={mdxComponents}
+        options={{
+          mdxOptions: {
+            rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]],
+          },
+        }}
+      />
+    </AnimatedPost>
   );
 }
