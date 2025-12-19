@@ -69,7 +69,7 @@ const mdxComponents = {
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="text-[#1A2234] dark:text-white font-bold underline underline-offset-4 decoration-2"
+      className="text-[#3B82F6] hover:text-[#2563EB] hover:underline dark:text-[#60A5FA] dark:hover:text-[#93C5FD] transition-colors"
       {...props}
     />
   ),
