@@ -87,13 +87,25 @@ body {
 }
 
 /* Code block styling for rehype-pretty-code */
+pre,
+pre > code,
+pre code * {
+  border: none !important;
+}
+
 pre > code {
   display: grid;
+  background: transparent !important;
 }
 
 pre [data-line] {
   padding: 0 0.75rem;
-  border-left: 2px solid transparent;
+  border: none !important;
+  background: transparent !important;
+}
+
+pre code span {
+  background: transparent !important;
 }
 
 /* Larger padding on larger screens */
@@ -105,7 +117,6 @@ pre [data-line] {
 
 pre [data-highlighted-line] {
   background: rgba(200, 200, 255, 0.1);
-  border-left-color: #60a5fa;
 }
 
 code[data-line-numbers] {

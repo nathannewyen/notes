@@ -31,11 +31,11 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
       {/* Copy button - positioned at top right */}
       <button
         onClick={handleCopy}
-        className="absolute top-2 sm:top-3 right-2 sm:right-3 p-1.5 sm:p-2 rounded-md bg-[#1a1a2e] hover:bg-[#2a2a3e] text-[#a0a0a0] hover:text-white transition-all opacity-0 group-hover:opacity-100 cursor-pointer border-0"
+        className="absolute top-2 sm:top-3 right-2 sm:right-3 p-1.5 sm:p-2 rounded-md text-[#75715e] hover:text-white transition-all opacity-0 group-hover:opacity-100 cursor-pointer border-0"
         aria-label={copied ? "Copied" : "Copy code"}
       >
         {copied ? (
-          <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400" />
+          <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#a6e22e]" />
         ) : (
           <Copy className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         )}
@@ -44,7 +44,7 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
       {/* Code block */}
       <pre
         ref={preRef}
-        className={`bg-[#0d1117] p-3 sm:p-4 rounded-lg overflow-x-auto text-xs sm:text-sm border-0 ${className ?? ""}`}
+        className={`bg-[#272822] p-3 sm:p-4 rounded-lg overflow-x-auto text-xs sm:text-sm border-0 ${className ?? ""}`}
       >
         {children}
       </pre>

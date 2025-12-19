@@ -99,8 +99,8 @@ const mdxComponents = {
 
 /* rehype-pretty-code options for syntax highlighting */
 const rehypePrettyCodeOptions = {
-  theme: "github-dark",
-  keepBackground: true,
+  theme: "monokai",
+  keepBackground: false,
 };
 
 export default async function PostPage({
