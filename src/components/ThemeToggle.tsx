@@ -73,7 +73,7 @@ export function ThemeToggle() {
   if (!mounted) {
     return (
       <button
-        className="p-2 rounded-lg hover:bg-[#e0e0e0] dark:hover:bg-[#3a3a4e] transition-colors cursor-pointer"
+        className="p-2 cursor-pointer hover:opacity-70 transition-opacity"
         aria-label="Toggle theme"
       >
         <div className="w-[18px] h-[18px]" />
@@ -87,7 +87,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={cycleTheme}
-      className="p-2 rounded-lg hover:bg-[#e0e0e0] dark:hover:bg-[#3a3a4e] transition-colors cursor-pointer"
+      className="p-2 cursor-pointer hover:opacity-70 transition-opacity"
       aria-label={`Current theme: ${theme}. Click to change.`}
       title={`Theme: ${theme}`}
     >
