@@ -10,7 +10,7 @@ export function Header() {
         href="/"
         className="font-semibold text-[#1A2234] dark:text-white hover:opacity-80 transition-opacity"
       >
-        Nathan Newyen
+        Nhan Nguyen
       </Link>
       <ThemeToggle />
     </header>

@@ -21,7 +21,7 @@ export async function generateMetadata({
   try {
     const post = getPostBySlug(slug);
     return {
-      title: `${post.title} | Nathan Newyen`,
+      title: `${post.title} | Nhan Nguyen`,
       description: post.description,
     };
   } catch {

@@ -18,22 +18,22 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nathan Newyen | Notes",
+  title: "Nhan Nguyen | Notes",
   description:
     "Personal notes on engineering, startups, and building products.",
   metadataBase: new URL("https://notes.newyen.dev"),
   openGraph: {
-    title: "Nathan Newyen | Notes",
+    title: "Nhan Nguyen | Notes",
     description:
       "Personal notes on engineering, startups, and building products.",
     url: "https://notes.newyen.dev",
-    siteName: "Nathan Newyen Notes",
+    siteName: "Nhan Nguyen Notes",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nathan Newyen | Notes",
+    title: "Nhan Nguyen | Notes",
     description:
       "Personal notes on engineering, startups, and building products.",
   },

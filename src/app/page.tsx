@@ -9,7 +9,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="mb-16">
         <h1 className="text-3xl font-bold mb-4 text-[#1A2234] dark:text-white">
-          Hi, I&apos;m Nathan Newyen.
+          Hi, I&apos;m Nhan Nguyen.
         </h1>
 
         <p className="text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-6 leading-relaxed">
