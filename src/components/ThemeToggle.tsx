@@ -1,8 +1,9 @@
 "use client";
 
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
-// Sun icon for light mode
+/* Sun icon for light mode */
 function SunIcon() {
   return (
     <svg
@@ -29,7 +30,7 @@ function SunIcon() {
   );
 }
 
-// Moon icon for dark mode
+/* Moon icon for dark mode */
 function MoonIcon() {
   return (
     <svg
@@ -49,9 +50,15 @@ function MoonIcon() {
 }
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  // Cycle through themes: light -> dark -> system -> light
+  /* Prevent hydration mismatch by only rendering after mount */
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  /* Cycle through themes: light -> dark -> system -> light */
   const cycleTheme = () => {
     if (theme === "light") {
       setTheme("dark");
@@ -62,17 +69,25 @@ export function ThemeToggle() {
     }
   };
 
-  // Determine which icon to show based on current effective theme
-  const isDark =
-    theme === "dark" ||
-    (theme === "system" &&
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches);
+  /* Show placeholder during SSR to prevent hydration mismatch */
+  if (!mounted) {
+    return (
+      <button
+        className="p-2 rounded-lg hover:bg-[#e0e0e0] dark:hover:bg-[#3a3a4e] transition-colors cursor-pointer"
+        aria-label="Toggle theme"
+      >
+        <div className="w-[18px] h-[18px]" />
+      </button>
+    );
+  }
+
+  /* Use resolvedTheme to determine actual displayed theme */
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button
       onClick={cycleTheme}
-      className="p-2 rounded-lg hover:bg-foreground/10 transition-colors"
+      className="p-2 rounded-lg hover:bg-[#e0e0e0] dark:hover:bg-[#3a3a4e] transition-colors cursor-pointer"
       aria-label={`Current theme: ${theme}. Click to change.`}
       title={`Theme: ${theme}`}
     >
