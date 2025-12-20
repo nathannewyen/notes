@@ -15,11 +15,11 @@ export function Header() {
       <div className="flex items-center gap-4">
         <a
           href="https://newyen.dev"
-          className="text-sm text-[#3B82F6] hover:text-[#2563EB] hover:underline dark:text-[#60A5FA] dark:hover:text-[#93C5FD] transition-colors"
+          className="font-mono text-sm sm:text-base text-[#1A2234] dark:text-white hover:opacity-80 transition-opacity tracking-wider"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Portfolio
+          PORTFOLIO
         </a>
         <ThemeToggle />
       </div>
