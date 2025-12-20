@@ -24,8 +24,8 @@ export function Footer() {
             rel="noopener noreferrer"
             className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
           >
-            <XIcon className="w-5 h-5" />
-            <span>X @nathannewyenn</span>
+            <XIcon className="w-4 h-4" />
+            <span className="text-sm">@nathannewyenn</span>
           </a>
           <a
             href="https://www.linkedin.com/in/nhannguyen3112/"
@@ -33,8 +33,8 @@ export function Footer() {
             rel="noopener noreferrer"
             className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
           >
-            <Linkedin className="w-5 h-5" />
-            <span>LinkedIn</span>
+            <Linkedin className="w-4 h-4" />
+            <span className="text-sm">LinkedIn</span>
           </a>
           <a
             href="https://github.com/nathannewyen"
@@ -42,14 +42,14 @@ export function Footer() {
             rel="noopener noreferrer"
             className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
           >
-            <Github className="w-5 h-5" />
-            <span>GitHub @nathannewyen</span>
+            <Github className="w-4 h-4" />
+            <span className="text-sm">@nathannewyen</span>
           </a>
         </div>
 
         {/* Bio text */}
         <div className="flex-1">
-          <p className="text-[#888] dark:text-[#a0a0a0] leading-relaxed">
+          <p className="text-sm text-[#888] dark:text-[#a0a0a0] leading-relaxed">
             I&apos;m a Senior Software Engineer at JPMorgan Chase building AI-powered products that serve customers at scale. I write about AI, LLMs, and engineering at{" "}
             <a
               href="https://notes.newyen.dev"
