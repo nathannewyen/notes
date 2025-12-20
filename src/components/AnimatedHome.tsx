@@ -83,7 +83,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
             : "opacity-0 translate-y-8"
         }`}
       >
-        <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center text-[#1A2234] dark:text-white">
+        <h2 className="text-lg sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#1A2234] dark:text-white">
           Latest
         </h2>
 
