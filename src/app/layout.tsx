@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Header } from "@/components/Header";
 
@@ -53,6 +54,7 @@ export default function RootLayout({
           <Header />
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
