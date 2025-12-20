@@ -12,7 +12,17 @@ export function Header() {
       >
         NHAN.NGUYEN
       </Link>
-      <ThemeToggle />
+      <div className="flex items-center gap-4">
+        <a
+          href="https://newyen.dev"
+          className="text-sm text-[#3B82F6] hover:text-[#2563EB] hover:underline dark:text-[#60A5FA] dark:hover:text-[#93C5FD] transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Portfolio
+        </a>
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
