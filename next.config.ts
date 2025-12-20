@@ -33,6 +33,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  /* Disable dev indicator in bottom left corner */
+  devIndicators: false,
   async headers() {
     return [
       {
