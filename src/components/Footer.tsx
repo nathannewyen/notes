@@ -17,7 +17,7 @@ export function Footer() {
       {/* Main content - social links left, bio right */}
       <div className="flex flex-col md:flex-row gap-6 sm:gap-8 mb-6 sm:mb-8">
         {/* Social links with labels */}
-        <div className="flex flex-row flex-wrap md:flex-col gap-4 md:gap-3">
+        <div className="flex flex-col gap-3">
           <a
             href="https://x.com/nathannewyenn"
             target="_blank"
@@ -25,7 +25,7 @@ export function Footer() {
             className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
           >
             <XIcon className="w-4 h-4" />
-            <span className="text-sm">@nathannewyenn</span>
+            <span>@nathannewyenn</span>
           </a>
           <a
             href="https://www.linkedin.com/in/nhannguyen3112/"
@@ -34,7 +34,7 @@ export function Footer() {
             className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
           >
             <Linkedin className="w-4 h-4" />
-            <span className="text-sm">LinkedIn</span>
+            <span>LinkedIn</span>
           </a>
           <a
             href="https://github.com/nathannewyen"
@@ -43,13 +43,13 @@ export function Footer() {
             className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
           >
             <Github className="w-4 h-4" />
-            <span className="text-sm">@nathannewyen</span>
+            <span>@nathannewyen</span>
           </a>
         </div>
 
         {/* Bio text */}
         <div className="flex-1">
-          <p className="text-sm text-[#888] dark:text-[#a0a0a0] leading-relaxed">
+          <p className="text-[#888] dark:text-[#a0a0a0] leading-relaxed">
             I&apos;m a Senior Software Engineer at JPMorgan Chase building AI-powered products that serve customers at scale. I write about AI, LLMs, and engineering at{" "}
             <a
               href="https://notes.newyen.dev"
