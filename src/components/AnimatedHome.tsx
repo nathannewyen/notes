@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
+import { RotatingText } from "./RotatingText";
 
 interface PostWithFormattedDate {
   slug: string;
@@ -22,8 +23,18 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
     <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
       {/* Hero Section - uses CSS animation for initial load */}
       <section className="mb-8 sm:mb-16 animate-fadeIn">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1A2234] dark:text-white">
-          Hi, I&apos;m Nhan Nguyen.
+        <h1 className="text-xl sm:text-3xl font-bold mb-4 text-[#1A2234] dark:text-white whitespace-nowrap">
+          Hi, I&apos;m Nhan Nguyen,{" "}
+          <RotatingText
+            texts={[
+              "an ML Engineer.",
+              "an Applied Scientist.",
+              "a Writer & Speaker.",
+              "an Operator-Angel.",
+              "a Problem Solver.",
+            ]}
+            interval={3000}
+          />
         </h1>
 
         <p className="text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-6 leading-relaxed">

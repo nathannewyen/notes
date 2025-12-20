@@ -6,7 +6,7 @@ test.describe("Post Page", () => {
   });
 
   test("displays the post title", async ({ page }) => {
-    await expect(page.locator("h1")).toContainText("Hello World");
+    await expect(page.locator("h1")).toContainText("Nhan Nguyen");
   });
 
   test("displays back link", async ({ page }) => {

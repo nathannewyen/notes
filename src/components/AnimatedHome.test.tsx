@@ -23,6 +23,11 @@ describe("AnimatedHome", () => {
     expect(screen.getByText(/Hi, I'm Nhan Nguyen/i)).toBeInTheDocument();
   });
 
+  it("renders rotating text with first role", () => {
+    render(<AnimatedHome posts={[]} />);
+    expect(screen.getByText(/an ML Engineer/i)).toBeInTheDocument();
+  });
+
   it("renders JPMorgan Chase link", () => {
     render(<AnimatedHome posts={[]} />);
     const link = screen.getByRole("link", { name: /JPMorgan Chase/i });
