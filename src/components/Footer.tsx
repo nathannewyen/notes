@@ -13,11 +13,11 @@ function XIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="mt-16 pt-8 border-t border-[#e0e0e0] dark:border-[#3a3a4e]">
+    <footer className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-[#e0e0e0] dark:border-[#3a3a4e]">
       {/* Main content - social links left, bio right */}
-      <div className="flex flex-col md:flex-row gap-8 mb-8">
+      <div className="flex flex-col md:flex-row gap-6 sm:gap-8 mb-6 sm:mb-8">
         {/* Social links with labels */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-row flex-wrap md:flex-col gap-4 md:gap-3">
           <a
             href="https://x.com/nathannewyenn"
             target="_blank"
@@ -63,7 +63,7 @@ export function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="text-center text-sm text-[#888] dark:text-[#a0a0a0]">
+      <div className="text-center text-xs sm:text-sm text-[#888] dark:text-[#a0a0a0]">
         © Nhan Nguyen 2024 - {new Date().getFullYear()}
       </div>
     </footer>

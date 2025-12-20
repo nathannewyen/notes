@@ -40,7 +40,7 @@ export function Comments() {
   if (!mounted) return null;
 
   return (
-    <div className="mt-12 pt-8 border-t border-[#e0e0e0] dark:border-[#3a3a4e]">
+    <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-[#e0e0e0] dark:border-[#3a3a4e]">
       <div ref={containerRef} />
     </div>
   );

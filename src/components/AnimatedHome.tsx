@@ -23,8 +23,8 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
     <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
       {/* Hero Section - uses CSS animation for initial load */}
       <section className="mb-8 sm:mb-16 animate-fadeIn">
-        <h1 className="text-xl sm:text-3xl font-bold mb-4 text-[#1A2234] dark:text-white whitespace-nowrap">
-          Hi, I&apos;m Nhan Nguyen,{" "}
+        <h1 className="text-xl sm:text-3xl font-bold mb-4 text-[#1A2234] dark:text-white">
+          <span className="block sm:inline">Hi, I&apos;m Nhan Nguyen,</span>{" "}
           <RotatingText
             texts={[
               "an ML Engineer.",
@@ -37,15 +37,15 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           />
         </h1>
 
-        <p className="text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-6 leading-relaxed">
+        <p className="text-base sm:text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-4 sm:mb-6 leading-relaxed">
           I build recommendation systems and AI-powered experiences that serve customers at scale.
         </p>
-        <p className="text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-6 leading-relaxed">
+        <p className="text-base sm:text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-4 sm:mb-6 leading-relaxed">
           Currently, I&apos;m a Senior Software Engineer @ Chase. Outside of work, I also...
         </p>
 
         {/* Activities displayed as flowing text with light blue links */}
-        <p className="text-lg text-[#1A2234] dark:text-[#a0a0a0] leading-relaxed space-y-1">
+        <p className="text-base sm:text-lg text-[#1A2234] dark:text-[#a0a0a0] leading-relaxed">
           <a
             href="https://newyen.dev"
             className="text-[#3B82F6] hover:text-[#2563EB] hover:underline dark:text-[#60A5FA] dark:hover:text-[#93C5FD] transition-colors"
