@@ -63,8 +63,9 @@ export function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="text-center text-xs sm:text-sm text-[#888] dark:text-[#a0a0a0]">
-        © Nhan Nguyen 2024 - {new Date().getFullYear()}
+      <div className="flex items-center justify-center gap-1 text-xs sm:text-sm text-[#888] dark:text-[#a0a0a0]">
+        <span className="leading-none">©</span>
+        <span>Nhan Nguyen 2024 - {new Date().getFullYear()}</span>
       </div>
     </footer>
   );
