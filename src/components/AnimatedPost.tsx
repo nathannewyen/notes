@@ -4,6 +4,18 @@ import Link from "next/link";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
 import { ReactNode } from "react";
 
+/* Tag component - clickable with light blue styling */
+function Tag({ tag }: { tag: string }) {
+  return (
+    <Link
+      href={`/tags/${tag}`}
+      className="px-2 py-0.5 rounded-full bg-[#f0f0f0] dark:bg-[#1a1a2e] text-[#3B82F6] dark:text-[#60A5FA] text-xs hover:bg-[#e0e0e0] dark:hover:bg-[#2a2a3e] transition-colors"
+    >
+      {tag}
+    </Link>
+  );
+}
+
 interface AnimatedPostProps {
   title: string;
   tags: string[];
@@ -42,12 +54,7 @@ export function AnimatedPost({
             <>
               <div className="flex flex-wrap items-center gap-1.5">
                 {tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-0.5 rounded-full bg-[#f0f0f0] dark:bg-[#1a1a2e] text-[#555] dark:text-[#a0a0a0] text-xs"
-                  >
-                    {tag}
-                  </span>
+                  <Tag key={tag} tag={tag} />
                 ))}
               </div>
               <span className="text-[#ccc] dark:text-[#555]">·</span>

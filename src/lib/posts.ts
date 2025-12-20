@@ -75,3 +75,21 @@ export function formatDate(dateString: string): string {
     year: "numeric",
   });
 }
+
+// Get all unique tags from all posts
+export function getAllTags(): string[] {
+  const posts = getAllPosts();
+  const tagsSet = new Set<string>();
+
+  posts.forEach((post) => {
+    post.tags.forEach((tag) => tagsSet.add(tag));
+  });
+
+  return Array.from(tagsSet).sort();
+}
+
+// Get posts filtered by tag
+export function getPostsByTag(tag: string): PostMeta[] {
+  const posts = getAllPosts();
+  return posts.filter((post) => post.tags.includes(tag));
+}
