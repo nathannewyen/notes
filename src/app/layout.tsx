@@ -50,7 +50,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceMono.variable} antialiased bg-background text-foreground`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Header />
           {children}
         </ThemeProvider>
