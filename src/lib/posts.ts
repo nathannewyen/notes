@@ -65,9 +65,10 @@ export function getAllPosts(): PostMeta[] {
   return posts;
 }
 
-// Format date for display (e.g., "14 Dec 2024")
+// Format date for display (e.g., "Dec 20, 2024")
 export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
+  /* Add T12:00:00 to avoid timezone issues - treats date as noon UTC */
+  const date = new Date(dateString + "T12:00:00");
   return date.toLocaleDateString("en-US", {
     day: "2-digit",
     month: "short",

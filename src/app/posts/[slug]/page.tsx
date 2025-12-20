@@ -4,6 +4,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { CodeBlock } from "@/components/CodeBlock";
 import { AnimatedPost } from "@/components/AnimatedPost";
+import { Comments } from "@/components/Comments";
+import { Footer } from "@/components/Footer";
 
 /* Generate static params for all posts */
 export async function generateStaticParams() {
@@ -132,6 +134,8 @@ export default async function PostPage({
           },
         }}
       />
+      <Comments />
+      <Footer />
     </AnimatedPost>
   );
 }
