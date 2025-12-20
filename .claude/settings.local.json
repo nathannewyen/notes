@@ -15,7 +15,9 @@
       "Bash(npm run test:run:*)",
       "Bash(npm run test:e2e:*)",
       "Bash(git -C /Users/nathannewyen/Desktop/projects/notes ls-files:*)",
-      "Bash(git -C /Users/nathannewyen/Desktop/projects/notes log --oneline -3 -- src/app/favicon.ico)"
+      "Bash(git -C /Users/nathannewyen/Desktop/projects/notes log --oneline -3 -- src/app/favicon.ico)",
+      "WebFetch(domain:eugeneyan.com)",
+      "Bash(git diff:*)"
     ]
   }
 }
