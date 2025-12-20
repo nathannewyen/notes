@@ -3,6 +3,7 @@
 import Link from "next/link";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
 import { RotatingText } from "./RotatingText";
+import { Footer } from "./Footer";
 
 interface PostWithFormattedDate {
   slug: string;
@@ -114,6 +115,8 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           </ul>
         )}
       </section>
+
+      <Footer />
     </main>
   );
 }
