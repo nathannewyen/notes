@@ -18,24 +18,24 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nhan Nguyen | Notes",
+  title: "Nhan Nguyen",
   description:
-    "Personal notes on engineering, startups, and building products.",
+    "Personal notes on engineering, AI, LLMs, and building products.",
   metadataBase: new URL("https://notes.newyen.dev"),
   openGraph: {
-    title: "Nhan Nguyen | Notes",
+    title: "Nhan Nguyen",
     description:
-      "Personal notes on engineering, startups, and building products.",
+      "Personal notes on engineering, AI, LLMs, and building products.",
     url: "https://notes.newyen.dev",
-    siteName: "Nhan Nguyen Notes",
+    siteName: "Nhan Nguyen",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nhan Nguyen | Notes",
+    title: "Nhan Nguyen",
     description:
-      "Personal notes on engineering, startups, and building products.",
+      "Personal notes on engineering, AI, LLMs, and building products.",
   },
 };
 
