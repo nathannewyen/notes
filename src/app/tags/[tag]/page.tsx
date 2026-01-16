@@ -41,27 +41,27 @@ export default async function TagPage({
       {/* Back link */}
       <Link
         href="/"
-        className="text-sm sm:text-base text-[#888] dark:text-[#a0a0a0] hover:text-[#1A2234] dark:hover:text-white transition-colors mb-6 sm:mb-8 inline-block"
+        className="text-sm sm:text-base text-muted hover:text-foreground transition-colors mb-6 sm:mb-8 inline-block"
       >
         &larr; Back to home
       </Link>
 
       {/* Tag header */}
       <header className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#1A2234] dark:text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
           Tag:{" "}
-          <span className="text-[#3B82F6] dark:text-[#60A5FA] font-mono">
+          <span className="text-link font-mono">
             {tag}
           </span>{" "}
-          <span className="text-[#888] dark:text-[#a0a0a0]">({posts.length})</span>
+          <span className="text-muted">({posts.length})</span>
         </h1>
       </header>
 
       {/* All tags */}
-      <div className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-[#e0e0e0] dark:border-[#3a3a4e]">
+      <div className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-border">
         <Link
           href="/"
-          className="px-2 py-1 rounded text-sm text-[#888] dark:text-[#a0a0a0] hover:text-[#1A2234] dark:hover:text-white transition-colors"
+          className="px-2 py-1 rounded text-sm text-muted hover:text-foreground transition-colors"
         >
           all
         </Link>
@@ -71,8 +71,8 @@ export default async function TagPage({
             href={`/tags/${t}`}
             className={`px-2 py-1 rounded text-sm transition-colors ${
               t === tag
-                ? "bg-[#3B82F6] dark:bg-[#60A5FA] text-white"
-                : "text-[#888] dark:text-[#a0a0a0] hover:text-[#1A2234] dark:hover:text-white"
+                ? "bg-link text-white"
+                : "text-muted hover:text-foreground"
             }`}
           >
             {t}
@@ -88,13 +88,13 @@ export default async function TagPage({
               href={`/posts/${post.slug}`}
               className="block group"
             >
-              <h2 className="text-xl font-bold text-[#1A2234] dark:text-white group-hover:text-[#3B82F6] dark:group-hover:text-[#60A5FA] transition-colors mb-2">
+              <h2 className="text-xl font-bold text-foreground group-hover:text-link transition-colors mb-2">
                 {post.title}
               </h2>
-              <p className="text-[#888] dark:text-[#a0a0a0] mb-2">
+              <p className="text-muted mb-2">
                 {post.description}
               </p>
-              <div className="flex flex-wrap items-center gap-2 text-sm text-[#888] dark:text-[#a0a0a0]">
+              <div className="flex flex-wrap items-center gap-2 text-sm text-muted">
                 <time>{formatDate(post.date)}</time>
                 <span>·</span>
                 <span>{post.readingTime}</span>
@@ -103,7 +103,7 @@ export default async function TagPage({
                   {post.tags.map((t) => (
                     <span
                       key={t}
-                      className="text-[#3B82F6] dark:text-[#60A5FA]"
+                      className="text-link"
                     >
                       {t}
                     </span>

@@ -35,6 +35,18 @@ body {
   --destructive: #ef4444;
   --input: #e0e0e0;
   --ring: #1A2234;
+  /* Link colors */
+  --link: #3B82F6;
+  --link-hover: #2563EB;
+  /* Separator/dot color */
+  --separator: #ccc;
+  /* Tag background */
+  --tag-bg: #f0f0f0;
+  /* Code colors */
+  --code-bg: #e0e0e0;
+  --code-block-bg: #272822;
+  --code-button: #75715e;
+  --code-success: #a6e22e;
 }
 
 /* Dark mode - matches v4 */
@@ -57,6 +69,18 @@ body {
   --destructive: #ef4444;
   --input: #3a3a4e;
   --ring: #ffffff;
+  /* Link colors */
+  --link: #60A5FA;
+  --link-hover: #93C5FD;
+  /* Separator/dot color */
+  --separator: #555;
+  /* Tag background */
+  --tag-bg: #1a1a2e;
+  /* Code colors */
+  --code-bg: #2a2a3e;
+  --code-block-bg: #272822;
+  --code-button: #75715e;
+  --code-success: #a6e22e;
 }
 
 @theme inline {
@@ -80,6 +104,14 @@ body {
   --color-destructive: var(--destructive);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-link: var(--link);
+  --color-link-hover: var(--link-hover);
+  --color-separator: var(--separator);
+  --color-tag-bg: var(--tag-bg);
+  --color-code-bg: var(--code-bg);
+  --color-code-block-bg: var(--code-block-bg);
+  --color-code-button: var(--code-button);
+  --color-code-success: var(--code-success);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

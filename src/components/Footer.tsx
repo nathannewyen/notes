@@ -13,7 +13,7 @@ function XIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-[#e0e0e0] dark:border-[#3a3a4e]">
+    <footer className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-border">
       {/* Main content - social links left, bio right */}
       <div className="flex flex-col md:flex-row gap-6 sm:gap-8 mb-6 sm:mb-8">
         {/* Social links with labels */}
@@ -22,7 +22,7 @@ export function Footer() {
             href="https://x.com/nathannewyenn"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
+            className="flex items-center gap-3 text-muted hover:text-foreground transition-colors"
           >
             <XIcon className="w-4 h-4" />
             <span>@nathannewyenn</span>
@@ -31,7 +31,7 @@ export function Footer() {
             href="https://www.linkedin.com/in/nhannguyen3112/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
+            className="flex items-center gap-3 text-muted hover:text-foreground transition-colors"
           >
             <Linkedin className="w-4 h-4" />
             <span>LinkedIn</span>
@@ -40,7 +40,7 @@ export function Footer() {
             href="https://github.com/nathannewyen"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 text-[#888] hover:text-[#1A2234] dark:hover:text-white transition-colors"
+            className="flex items-center gap-3 text-muted hover:text-foreground transition-colors"
           >
             <Github className="w-4 h-4" />
             <span>@nathannewyen</span>
@@ -49,11 +49,11 @@ export function Footer() {
 
         {/* Bio text */}
         <div className="flex-1">
-          <p className="text-[#888] dark:text-[#a0a0a0] leading-relaxed">
+          <p className="text-muted leading-relaxed">
             I&apos;m a Senior Software Engineer at JPMorgan Chase building AI-powered products that serve customers at scale. I write about AI, LLMs, and engineering at{" "}
             <a
               href="https://notes.newyen.dev"
-              className="text-[#3B82F6] hover:underline dark:text-[#60A5FA]"
+              className="text-link hover:underline"
             >
               notes.newyen.dev
             </a>
@@ -63,7 +63,7 @@ export function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="flex items-center justify-center gap-1 text-xs sm:text-sm text-[#888] dark:text-[#a0a0a0]">
+      <div className="flex items-center justify-center gap-1 text-xs sm:text-sm text-muted">
         <span className="leading-none">©</span>
         <span>Nhan Nguyen 2024 - {new Date().getFullYear()}</span>
       </div>

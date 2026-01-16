@@ -34,29 +34,29 @@ export async function generateMetadata({
   }
 }
 
-/* MDX components for custom styling - matches v4 colors */
+/* MDX components for custom styling - uses centralized color system */
 const mdxComponents = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
-      className="text-2xl sm:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-[#1A2234] dark:text-white"
+      className="text-2xl sm:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-foreground"
       {...props}
     />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
-      className="text-xl sm:text-2xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-[#1A2234] dark:text-white"
+      className="text-xl sm:text-2xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-foreground"
       {...props}
     />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      className="text-lg sm:text-xl font-bold mt-5 sm:mt-6 mb-2 sm:mb-3 text-[#1A2234] dark:text-white"
+      className="text-lg sm:text-xl font-bold mt-5 sm:mt-6 mb-2 sm:mb-3 text-foreground"
       {...props}
     />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
-      className="mb-4 leading-relaxed text-[#1A2234] dark:text-[#a0a0a0]"
+      className="mb-4 leading-relaxed text-muted"
       {...props}
     />
   ),
@@ -67,33 +67,33 @@ const mdxComponents = {
     <ol className="list-decimal list-outside pl-5 mb-4 space-y-2" {...props} />
   ),
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="text-[#1A2234] dark:text-[#a0a0a0]" {...props} />
+    <li className="text-muted" {...props} />
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className="text-[#3B82F6] hover:text-[#2563EB] hover:underline dark:text-[#60A5FA] dark:hover:text-[#93C5FD] transition-colors"
+      className="text-link hover:text-link-hover hover:underline transition-colors"
       {...props}
     />
   ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="border-l-4 border-[#e0e0e0] dark:border-[#3a3a4e] pl-4 italic text-[#888] dark:text-[#a0a0a0] my-4"
+      className="border-l-4 border-border pl-4 italic text-muted my-4"
       {...props}
     />
   ),
   code: (props: React.HTMLAttributes<HTMLElement>) => (
     <code
-      className="bg-[#e0e0e0] dark:bg-[#2a2a3e] px-1.5 py-0.5 rounded text-sm font-mono"
+      className="bg-code-bg px-1.5 py-0.5 rounded text-sm font-mono"
       {...props}
     />
   ),
   pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
     <CodeBlock {...props} />
   ),
-  hr: () => <hr className="border-[#e0e0e0] dark:border-[#3a3a4e] my-8" />,
+  hr: () => <hr className="border-border my-8" />,
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
     <strong
-      className="font-bold text-[#1A2234] dark:text-white"
+      className="font-bold text-foreground"
       {...props}
     />
   ),

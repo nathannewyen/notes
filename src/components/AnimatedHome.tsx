@@ -24,7 +24,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
     <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
       {/* Hero Section - uses CSS animation for initial load */}
       <section className="mb-8 sm:mb-16 animate-fadeIn">
-        <h1 className="text-lg sm:text-3xl font-bold mb-4 text-[#1A2234] dark:text-white whitespace-nowrap">
+        <h1 className="text-lg sm:text-3xl font-bold mb-4 text-foreground whitespace-nowrap">
           Hi, I&apos;m Nhan Nguyen,{" "}
           <RotatingText
             texts={[
@@ -38,18 +38,18 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           />
         </h1>
 
-        <p className="text-base sm:text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-4 sm:mb-6 leading-relaxed">
+        <p className="text-base sm:text-lg text-muted mb-4 sm:mb-6 leading-relaxed">
           I build recommendation systems and AI-powered experiences that serve customers at scale.
         </p>
-        <p className="text-base sm:text-lg text-[#1A2234] dark:text-[#a0a0a0] mb-4 sm:mb-6 leading-relaxed">
+        <p className="text-base sm:text-lg text-muted mb-4 sm:mb-6 leading-relaxed">
           Currently, I&apos;m a Senior Software Engineer @ Chase. Outside of work, I also...
         </p>
 
         {/* Activities displayed as flowing text with light blue links */}
-        <p className="text-base sm:text-lg text-[#1A2234] dark:text-[#a0a0a0] leading-relaxed">
+        <p className="text-base sm:text-lg text-muted leading-relaxed">
           <a
             href="https://newyen.dev"
-            className="text-[#3B82F6] hover:text-[#2563EB] hover:underline dark:text-[#60A5FA] dark:hover:text-[#93C5FD] transition-colors"
+            className="text-link hover:text-link-hover hover:underline transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -59,7 +59,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           <br />
           <a
             href="https://github.com/nathannewyen"
-            className="text-[#3B82F6] hover:text-[#2563EB] hover:underline dark:text-[#60A5FA] dark:hover:text-[#93C5FD] transition-colors"
+            className="text-link hover:text-link-hover hover:underline transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -72,7 +72,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
       </section>
 
       {/* Divider - delayed fade in animation */}
-      <hr className="border-[#e0e0e0] dark:border-[#3a3a4e] mb-8 sm:mb-12 animate-fadeIn animation-delay-200" />
+      <hr className="border-border mb-8 sm:mb-12 animate-fadeIn animation-delay-200" />
 
       {/* Latest Posts Section - uses scroll animation hook */}
       <section
@@ -83,12 +83,12 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
             : "opacity-0 translate-y-8"
         }`}
       >
-        <h2 className="text-lg sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#1A2234] dark:text-white">
+        <h2 className="text-lg sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-foreground">
           Latest
         </h2>
 
         {posts.length === 0 ? (
-          <p className="text-[#888] dark:text-[#a0a0a0] text-center">
+          <p className="text-muted text-center">
             No posts yet. Check back soon!
           </p>
         ) : (
@@ -98,15 +98,15 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
                 key={post.slug}
                 className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3"
               >
-                <time className="text-xs sm:text-sm text-[#888] dark:text-[#a0a0a0] font-mono whitespace-nowrap">
+                <time className="text-xs sm:text-sm text-muted font-mono whitespace-nowrap">
                   {post.formattedDate}
                 </time>
-                <span className="hidden sm:inline text-[#ccc] dark:text-[#555]">
+                <span className="hidden sm:inline text-separator">
                   ·
                 </span>
                 <Link
                   href={`/posts/${post.slug}`}
-                  className="text-[#1A2234] dark:text-white hover:underline transition-colors text-sm sm:text-base"
+                  className="text-foreground hover:underline transition-colors text-sm sm:text-base"
                 >
                   {post.title}
                 </Link>
