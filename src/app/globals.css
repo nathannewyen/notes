@@ -211,12 +211,3 @@ code[data-line-numbers] > [data-line]::before {
 .animation-delay-300 {
   animation-delay: 300ms;
 }
-
-/* Hide utterances "powered by" footer by clipping the iframe bottom */
-.utterances {
-  max-height: 100%;
-}
-
-.utterances-frame {
-  margin-bottom: -30px !important;
-}

@@ -22,15 +22,23 @@ export function Comments() {
       container.removeChild(container.firstChild);
     }
 
-    /* Create utterances script */
+    /* Create Giscus script */
     const script = document.createElement("script");
-    script.src = "https://utteranc.es/client.js";
-    script.setAttribute("repo", "nathannewyen/notes");
-    script.setAttribute("issue-term", "pathname");
+    script.src = "https://giscus.app/client.js";
+    script.setAttribute("data-repo", "nathannewyen/notes");
+    script.setAttribute("data-repo-id", "R_kgDOQra4AA");
+    script.setAttribute("data-category", "General");
+    script.setAttribute("data-category-id", "DIC_kwDOQra4AM4C1DJt");
+    script.setAttribute("data-mapping", "pathname");
+    script.setAttribute("data-strict", "0");
+    script.setAttribute("data-reactions-enabled", "1");
+    script.setAttribute("data-emit-metadata", "0");
+    script.setAttribute("data-input-position", "bottom");
     script.setAttribute(
-      "theme",
-      resolvedTheme === "dark" ? "github-dark" : "github-light"
+      "data-theme",
+      resolvedTheme === "dark" ? "dark" : "light"
     );
+    script.setAttribute("data-lang", "en");
     script.setAttribute("crossorigin", "anonymous");
     script.async = true;
 
@@ -41,7 +49,7 @@ export function Comments() {
 
   return (
     <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border">
-      <div ref={containerRef} className="overflow-hidden" />
+      <div ref={containerRef} />
     </div>
   );
 }
