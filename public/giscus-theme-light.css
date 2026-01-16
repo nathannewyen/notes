@@ -1,0 +1,36 @@
+/* Custom Giscus theme (light) - left-aligned reactions, tighter spacing */
+
+/* Import base light theme */
+@import url('https://giscus.app/themes/light.css');
+
+/* Left-align reactions section */
+.gsc-reactions {
+  justify-content: flex-start !important;
+}
+
+.gsc-reactions-title {
+  text-align: left !important;
+}
+
+.gsc-reactions-buttons {
+  justify-content: flex-start !important;
+}
+
+/* Reduce spacing between sections */
+.gsc-reactions {
+  padding: 0.5rem 0 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.gsc-header {
+  padding-bottom: 0.5rem !important;
+}
+
+.gsc-comments {
+  gap: 0.75rem !important;
+}
+
+/* Tighten overall container */
+.gsc-main {
+  gap: 0.75rem !important;
+}
