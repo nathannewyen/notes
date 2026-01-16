@@ -36,9 +36,7 @@ export function Comments() {
     script.setAttribute("data-input-position", "bottom");
     script.setAttribute(
       "data-theme",
-      resolvedTheme === "dark"
-        ? "https://notes.newyen.dev/giscus-theme.css"
-        : "https://notes.newyen.dev/giscus-theme-light.css"
+      resolvedTheme === "dark" ? "dark" : "light"
     );
     script.setAttribute("data-lang", "en");
     script.setAttribute("crossorigin", "anonymous");
