@@ -211,20 +211,3 @@ code[data-line-numbers] > [data-line]::before {
 .animation-delay-300 {
   animation-delay: 300ms;
 }
-
-/* Giscus - left-align reactions */
-.gsc-reactions {
-  justify-content: flex-start !important;
-}
-
-.gsc-reactions-title {
-  text-align: left !important;
-}
-
-.gsc-reactions-buttons {
-  justify-content: flex-start !important;
-}
-
-.gsc-main {
-  gap: 0.5rem !important;
-}
