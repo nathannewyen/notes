@@ -25,7 +25,7 @@ describe("AnimatedHome", () => {
 
   it("renders rotating text with first role", () => {
     render(<AnimatedHome posts={[]} />);
-    expect(screen.getByText(/a Frontend Engineer/i)).toBeInTheDocument();
+    expect(screen.getByText(/^a Frontend Engineer\.$/)).toBeInTheDocument();
   });
 
   it("renders JPMorgan Chase link", () => {

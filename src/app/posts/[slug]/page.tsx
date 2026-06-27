@@ -131,6 +131,7 @@ export default async function PostPage({
         source={post.content}
         components={mdxComponents}
         options={{
+          blockJS: false,
           mdxOptions: {
             rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]],
           },
