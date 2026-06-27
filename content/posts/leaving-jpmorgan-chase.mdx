@@ -1,0 +1,51 @@
+---
+title: "Leaving JPMorgan Chase: Three Years on the Consumer Card Frontend"
+date: "2026-06-27"
+description: "Reflecting on three years of building React/TypeScript frontends for the consumer card catalog and rewards platform at JPMorgan Chase."
+tags: ["career", "frontend", "react", "personal"]
+---
+
+Yesterday was my last day at JPMorgan Chase. Three years and three months as a Software Engineer III on the consumer card team — March 2023 to June 2026.
+
+I figured I'd write down what I actually worked on while it's still fresh, because the resume bullets never quite tell the real story.
+
+## The Card Product Launch — the internal catalog
+
+The first big thing I owned was the consumer card catalog: an internal tool used by 500+ marketing users across 10+ card product lines to manage every card surface the bank ships.
+
+The frontend was React and TypeScript, with Redux-Saga managing the async flows and TanStack Query/Table doing the heavy lifting on the data-dense screens. The tables were the interesting part — keeping them responsive at that scale meant virtualization, careful memoization, and being honest about which interactions actually needed to be concurrent.
+
+The piece I'm most proud of is the design-token and animation system we built to take Figma prototypes and turn them into pixel-accurate React. Before that, every team was drifting on its own little style variants. After, the surfaces all looked like the same product.
+
+## The Rewards Earning platform
+
+The second project was the customer-facing rewards UI — points earning, tier progression, rewards history — across the consumer card portfolio.
+
+This one had two halves:
+
+- The **customer side**: React/TypeScript surfaces with Redux-Saga handling all the async coordination and client state.
+- The **internal side**: configuration tooling so marketing and operations could set up new offers end to end — offer setup screens, earning-rule definitions, merchant list management. TanStack Query/Table again for the data-dense admin views.
+
+Somewhere along the way it became clear we kept rebuilding the same primitives, so I spent a meaningful chunk of time pulling out reusable React/TypeScript components — data tables, form controls, modals, dropdowns, notifications — plus shared hooks for data fetching, auth, and common workflows. Those got picked up by other internal banking apps, which felt good.
+
+## The quieter wins
+
+Two slower-moving things I think mattered more than they look on paper:
+
+1. **Migrating legacy class components to functional + hooks**, extracting business logic into custom hooks, and adopting RTK Query for newer features. Not glamorous, but it standardized how we fetched data and cut a lot of Redux boilerplate.
+2. **Frontend testing conventions** with Jest, React Testing Library, and MSW for API mocking — shared test utilities and behavior-focused patterns. Reliability went up; production regressions went down.
+
+## What I'm taking with me
+
+A few things I learned that I'd carry into any frontend role:
+
+- **Design systems are leverage.** A well-built token and primitive layer pays for itself within a quarter.
+- **Server state and client state are different problems.** Stop trying to solve them with the same tool.
+- **Tests should describe behavior, not implementation.** Otherwise you're just freezing a snapshot of your current bad ideas.
+- **The boring migrations are the ones that compound.** Class-to-hooks, Redux-to-RTK Query — small wins that quietly make everything after them easier.
+
+## What's next
+
+I'm taking a short break and then jumping into the next role. I'm focused on **frontend engineering** — React, TypeScript, Next.js, design systems, performance, the details that make interfaces feel right. If you're hiring, [reach out](mailto:nhan13574@gmail.com).
+
+More writing coming soon.

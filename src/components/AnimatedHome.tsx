@@ -42,7 +42,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           I build customer-facing web products with React, TypeScript, and Next.js — focused on the UI, performance, and the details that make interfaces feel right.
         </p>
         <p className="text-base sm:text-lg text-muted mb-4 sm:mb-6 leading-relaxed">
-          Most recently, I was a Software Engineer at{" "}
+          Most recently, I was a Software Engineer III at{" "}
           <a
             href="https://www.jpmorganchase.com/"
             className="text-link hover:text-link-hover hover:underline transition-colors"
