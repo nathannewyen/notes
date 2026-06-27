@@ -50,7 +50,7 @@ export function Footer() {
         {/* Bio text */}
         <div className="flex-1">
           <p className="text-muted leading-relaxed">
-            I&apos;m a Senior Software Engineer at JPMorgan Chase building AI-powered products that serve customers at scale. I write about AI, LLMs, and engineering at{" "}
+            I&apos;m a frontend engineer who builds customer-facing web products with React, TypeScript, and Next.js. Most recently at JPMorgan Chase (2023 — 2026), and currently open to new roles. I write about frontend engineering and product craft at{" "}
             <a
               href="https://notes.newyen.dev"
               className="text-link hover:underline"

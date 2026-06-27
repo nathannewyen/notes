@@ -25,7 +25,7 @@ describe("AnimatedHome", () => {
 
   it("renders rotating text with first role", () => {
     render(<AnimatedHome posts={[]} />);
-    expect(screen.getByText(/an ML Engineer/i)).toBeInTheDocument();
+    expect(screen.getByText(/a Frontend Engineer/i)).toBeInTheDocument();
   });
 
   it("renders JPMorgan Chase link", () => {
@@ -34,9 +34,18 @@ describe("AnimatedHome", () => {
     expect(link).toHaveAttribute("href", "https://www.jpmorganchase.com/");
   });
 
-  it("renders interests section", () => {
+  it("mentions open to new frontend roles", () => {
     render(<AnimatedHome posts={[]} />);
-    expect(screen.getByText(/I like rockets, AI, and LLMs/i)).toBeInTheDocument();
+    expect(screen.getByText(/open to new frontend roles/i)).toBeInTheDocument();
+  });
+
+  it("renders The Beuter Design project link", () => {
+    render(<AnimatedHome posts={[]} />);
+    const link = screen.getByRole("link", { name: /The Beuter Design/i });
+    expect(link).toHaveAttribute(
+      "href",
+      "https://github.com/nathannewyen/the-beuter-design-ecommerce-platform",
+    );
   });
 
   it("renders activity links", () => {

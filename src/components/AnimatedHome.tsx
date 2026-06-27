@@ -28,10 +28,10 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           Hi, I&apos;m Nhan Nguyen,{" "}
           <RotatingText
             texts={[
-              "an ML Engineer.",
-              "an Applied Scientist.",
-              "a Writer & Speaker.",
-              "an Operator-Angel.",
+              "a Frontend Engineer.",
+              "a React Engineer.",
+              "a UI Engineer.",
+              "a Product Engineer.",
               "a Problem Solver.",
             ]}
             interval={3000}
@@ -39,10 +39,28 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
         </h1>
 
         <p className="text-base sm:text-lg text-muted mb-4 sm:mb-6 leading-relaxed">
-          I build recommendation systems and AI-powered experiences that serve customers at scale.
+          I build customer-facing web products with React, TypeScript, and Next.js — focused on the UI, performance, and the details that make interfaces feel right.
         </p>
         <p className="text-base sm:text-lg text-muted mb-4 sm:mb-6 leading-relaxed">
-          Currently, I&apos;m a Senior Software Engineer @ Chase. Outside of work, I also...
+          Most recently, I was a Software Engineer at{" "}
+          <a
+            href="https://www.jpmorganchase.com/"
+            className="text-link hover:text-link-hover hover:underline transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            JPMorgan Chase
+          </a>
+          {" "}(March 2023 — June 2026), where I built React/TypeScript frontends for the consumer card catalog and rewards platform. I&apos;m currently{" "}
+          <span className="text-foreground font-semibold">open to new frontend roles</span>
+          {" "}— feel free to{" "}
+          <a
+            href="mailto:nhan13574@gmail.com"
+            className="text-link hover:text-link-hover hover:underline transition-colors"
+          >
+            reach out
+          </a>
+          .
         </p>
 
         {/* Activities displayed as flowing text with light blue links */}
@@ -55,7 +73,18 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           >
             Write
           </a>{" "}
-          about engineering, product development, and what I&apos;m learning.
+          about frontend engineering, React, and product craft.
+          <br />
+          Build personal projects like{" "}
+          <a
+            href="https://github.com/nathannewyen/the-beuter-design-ecommerce-platform"
+            className="text-link hover:text-link-hover hover:underline transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            The Beuter Design
+          </a>
+          , an ecommerce platform built with Next.js and TypeScript.
           <br />
           <a
             href="https://github.com/nathannewyen"
@@ -66,8 +95,6 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
             Contribute
           </a>{" "}
           to open source projects.
-          <br />
-          Build AI-powered tools and experiment with LLMs.
         </p>
       </section>
 

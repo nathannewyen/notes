@@ -21,12 +21,12 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: "Nhan Nguyen",
   description:
-    "Personal notes on engineering, AI, LLMs, and building products.",
+    "Personal notes on frontend engineering, React, and product craft.",
   metadataBase: new URL("https://notes.newyen.dev"),
   openGraph: {
     title: "Nhan Nguyen",
     description:
-      "Personal notes on engineering, AI, LLMs, and building products.",
+      "Personal notes on frontend engineering, React, and product craft.",
     url: "https://notes.newyen.dev",
     siteName: "Nhan Nguyen",
     locale: "en_US",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nhan Nguyen",
     description:
-      "Personal notes on engineering, AI, LLMs, and building products.",
+      "Personal notes on frontend engineering, React, and product craft.",
   },
 };
 

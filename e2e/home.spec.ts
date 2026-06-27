@@ -15,10 +15,17 @@ test.describe("Home Page", () => {
     await expect(link).toHaveAttribute("href", "https://www.jpmorganchase.com/");
   });
 
-  test("displays interests text", async ({ page }) => {
-    await expect(page.locator("main")).toContainText("rockets");
-    await expect(page.locator("main")).toContainText("AI");
-    await expect(page.locator("main")).toContainText("LLMs");
+  test("displays current job-search status", async ({ page }) => {
+    await expect(page.locator("main")).toContainText("open to new frontend roles");
+  });
+
+  test("displays The Beuter Design project link", async ({ page }) => {
+    const link = page.getByRole("link", { name: /The Beuter Design/i });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute(
+      "href",
+      "https://github.com/nathannewyen/the-beuter-design-ecommerce-platform",
+    );
   });
 
   test("displays activity links", async ({ page }) => {
