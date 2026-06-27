@@ -1,11 +1,13 @@
 ---
 title: "Building The Beuter Design: An Ecommerce Frontend in Next.js 16"
 date: "2026-06-27"
-description: "A study project replicating the BEUTER® webstore with Next.js 16, React 19, Tailwind v4, Zustand, and next-intl — and what I learned shipping it end to end."
+description: "A study project replicating the BEUTER® webstore with Next.js 16, React 19, Tailwind v4, Zustand, and a full checkout flow — and what I learned shipping it end to end."
 tags: ["frontend", "nextjs", "react", "projects"]
 ---
 
 I built [The Beuter Design](https://github.com/nathannewyen/the-beuter-design-ecommerce-platform) as a portfolio replica of the BEUTER® webstore — a fashion brand whose site I've always liked for how restrained and editorial it feels. The goal wasn't to clone pixels; it was to use a real brand system as a forcing function to ship a full ecommerce frontend with the current generation of Next.js tooling.
+
+![Beuter homepage with full-bleed campaign hero](/images/posts/beuter/home.jpg)
 
 ## The stack
 
@@ -14,7 +16,7 @@ I built [The Beuter Design](https://github.com/nathannewyen/the-beuter-design-ec
 - **Tailwind CSS v4** — using `@theme inline` for brand tokens
 - **Zustand** for client state (cart, wishlist) with localStorage persistence
 - **Framer Motion** for transitions
-- **next-intl** for EN/VN locale switching, cookie-persisted
+- **next-intl** for translation-driven copy
 - **Storybook** for component docs
 - **Playwright** for end-to-end tests
 - **GitHub Actions** for CI (lint · typecheck · build · Storybook · Playwright)
@@ -23,11 +25,31 @@ I built [The Beuter Design](https://github.com/nathannewyen/the-beuter-design-ec
 
 The store has the surfaces you'd expect from a real DTC brand:
 
-- A **fixed left-sidebar nav** with a full-bleed campaign hero carousel and reveal-on-scroll editorial sections.
+- A **fixed left-sidebar nav** with a full-bleed campaign hero and reveal-on-scroll editorial sections.
 - A **server-rendered shop** at `/shop` with a category sidebar (Collections / Tops / Bottoms / Accessories) and URL-driven filters.
 - **SSG product detail pages** with an image gallery, size picker, and add-to-cart.
-- A **persistent cart and wishlist** powered by Zustand, with localStorage persistence and an SSR-safe storage shim so hydration doesn't blow up.
-- **EN/VN internationalization** via next-intl across nav, footer, and content.
+- A **persistent cart drawer and wishlist** powered by Zustand, with localStorage persistence and an SSR-safe storage shim so hydration doesn't blow up.
+- A **full checkout flow** with shipping form, country/state/city/postal fields, payment-method selection (online / COD / bank transfer), order notes, and a live order summary with discount-code input.
+
+<PhotoGrid
+  aspect="aspect-[16/10]"
+  fit="contain"
+  photos={[
+    { src: "/images/posts/beuter/shop.jpg", alt: "Shop listing with category sidebar and URL-driven filters" },
+    { src: "/images/posts/beuter/product.jpg", alt: "Product detail page with cart drawer open" }
+  ]}
+  caption="Server-rendered shop and product detail with the cart drawer opening into a persistent Zustand store."
+/>
+
+<PhotoGrid
+  aspect="aspect-[16/10]"
+  fit="contain"
+  photos={[
+    { src: "/images/posts/beuter/cart.jpg", alt: "Cart drawer with line items and order summary" },
+    { src: "/images/posts/beuter/checkout.jpg", alt: "Checkout page with shipping information form and order summary" }
+  ]}
+  caption="From cart to checkout: the drawer routes into the full checkout page with the order summary kept sticky on the right."
+/>
 
 ## Things I actually learned
 
@@ -41,18 +63,19 @@ A few notes I want to remember.
 
 Persisting a Zustand store to localStorage in a Next.js app means you have to be careful: server render has no `window`, so the persisted state can't materialize until the client takes over. The fix was a small SSR-safe storage shim that returns no-ops on the server and reads from `localStorage` on the client. Once that's in place, the dev experience is great.
 
-### next-intl is the right level of opinionated
+### Checkout is where the abstractions get tested
 
-I tried a couple of i18n patterns before landing on next-intl. Cookie-persisted locale + locale-aware server components is the configuration I'd reach for again. Translation files stay flat and obvious, and the API doesn't fight server rendering.
+The checkout page is the first place where the design system, the cart store, the currency formatter, the routing, and the form patterns all have to agree at once. I'd built most of those pieces in isolation, and the checkout was where the seams showed — places where the cart drawer summary and the checkout summary diverged, where currency formatting was reinvented per surface. Worth doing the checkout early, even on a portfolio piece, just to surface those decisions.
 
 ### A real quality pipeline pays off on a solo project too
 
-Storybook for components, Playwright e2e covering the critical journeys (home, shop, cart, locale switch), CI running lint / typecheck / build / Storybook / Playwright on every push. Overkill for a portfolio piece? Maybe — but it forced me to keep the codebase honest, and the e2e tests have already caught two regressions I would've missed.
+Storybook for components, Playwright e2e covering the critical journeys (home, shop, cart, checkout), CI running lint / typecheck / build / Storybook / Playwright on every push. Overkill for a portfolio piece? Maybe — but it forced me to keep the codebase honest, and the e2e tests have already caught two regressions I would've missed.
 
 ## What I'd do differently
 
 - **Start with the design tokens, not the components.** I built a handful of components first and then retro-fitted the token layer. Doing it the other way would've saved a refactor.
 - **Lean harder on RSCs.** I defaulted to client components in a few places where I didn't need to. Worth being more deliberate about the boundary.
+- **Treat checkout as a first-class surface, not a final one.** Building it last meant I had to retro-fit a few primitives (form inputs, summary rows) that should've been there from day one.
 
 ## Try it
 
