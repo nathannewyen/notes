@@ -16,7 +16,7 @@ test.describe("Home Page", () => {
   });
 
   test("displays current job-search status", async ({ page }) => {
-    await expect(page.locator("main")).toContainText("open to new frontend roles");
+    await expect(page.locator("main")).toContainText("open to new product engineering roles");
   });
 
   test("displays The Beuter Design project link", async ({ page }) => {

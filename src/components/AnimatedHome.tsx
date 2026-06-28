@@ -28,10 +28,9 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
           Hi, I&apos;m Nhan Nguyen,{" "}
           <RotatingText
             texts={[
-              "a Frontend Engineer.",
+              "a Product Engineer.",
               "a React Engineer.",
               "a UI Engineer.",
-              "a Product Engineer.",
               "a Problem Solver.",
             ]}
             interval={3000}
@@ -52,7 +51,7 @@ export function AnimatedHome({ posts }: AnimatedHomeProps) {
             JPMorgan Chase
           </a>
           {" "}(March 2023 — June 2026), where I built React/TypeScript frontends for the consumer card catalog and rewards platform. I&apos;m currently{" "}
-          <span className="text-foreground font-semibold">open to new frontend roles</span>
+          <span className="text-foreground font-semibold">open to new product engineering roles</span>
           {" "}— feel free to{" "}
           <a
             href="mailto:nhan13574@gmail.com"

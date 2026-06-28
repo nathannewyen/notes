@@ -25,7 +25,7 @@ describe("AnimatedHome", () => {
 
   it("renders rotating text with first role", () => {
     render(<AnimatedHome posts={[]} />);
-    expect(screen.getByText(/^a Frontend Engineer\.$/)).toBeInTheDocument();
+    expect(screen.getByText(/^a Product Engineer\.$/)).toBeInTheDocument();
   });
 
   it("renders JPMorgan Chase link", () => {
@@ -34,9 +34,9 @@ describe("AnimatedHome", () => {
     expect(link).toHaveAttribute("href", "https://www.jpmorganchase.com/");
   });
 
-  it("mentions open to new frontend roles", () => {
+  it("mentions open to new product engineering roles", () => {
     render(<AnimatedHome posts={[]} />);
-    expect(screen.getByText(/open to new frontend roles/i)).toBeInTheDocument();
+    expect(screen.getByText(/open to new product engineering roles/i)).toBeInTheDocument();
   });
 
   it("renders The Beuter Design project link", () => {
