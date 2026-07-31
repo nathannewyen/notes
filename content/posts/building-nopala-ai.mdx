@@ -1,0 +1,81 @@
+---
+title: "Building Nopala: An AI Language Coach You Actually Talk To"
+date: "2026-07-31"
+description: "A language-learning app built around spoken practice — browser speech recognition, a streaming LLM conversation partner, and structured scoring — plus why the database moved out of Next.js."
+tags: ["ai", "nextjs", "react", "projects"]
+---
+
+[Nopala](https://nopala-web.vercel.app/) is a language-learning app built around one idea: the thing people are worst at is *speaking*, and the thing most apps make you do is *tap*. So Nopala's core loop is a conversation. You pick a scenario — ordering at a café, asking for directions, describing symptoms to a doctor — you talk, and at the end you get scored on fluency, grammar, vocabulary, and pronunciation.
+
+I started it in mid-July and it's been the project I've learned the most from this year, mostly because the interesting problems weren't where I expected them.
+
+## The stack
+
+- **Next.js 16** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS v4**
+- **Clerk** for auth — the single identity source; rows link by `clerk_user_id` and we never store passwords
+- **Neon Postgres** + **Drizzle ORM**
+- **GraphQL** — Apollo Client on the frontend, a NestJS service behind it
+- **Redux Toolkit** for client state, **Framer Motion** for the motion layer
+- **Groq** via the AI SDK for the coach and the scoring pass
+- Deployed on **Vercel**
+
+## The practice pipeline
+
+The live session is three pieces stitched together, and only one of them costs anything.
+
+**Voice input runs on-device.** The browser's Web Speech API transcribes the learner — no API key, no audio upload, no per-minute cost. The language is derived from the scenario, so a Spanish scenario listens in Spanish. Firefox doesn't implement it, so that path falls back to a text input rather than pretending to listen.
+
+**The coach streams.** `POST /api/chat` uses `streamText` against Groq and streams the conversation partner's next line back as plain text. The client reads the stream and fills the bubble live. The prompt keeps the model in character and in the scenario's target language, and it infers the counterpart's role from the scenario itself — there's no per-scenario config file to maintain, which matters when the catalog grows.
+
+**Scoring is structured.** `POST /api/score` runs `generateText` with `Output.object` against a Zod schema matching the feedback report, so the grades, tips, and summary come back typed instead of parsed out of prose.
+
+The whole thing runs on a free Groq key with `llama-3.3-70b-versatile` as the default. The key is server-side only — never `NEXT_PUBLIC`.
+
+## Shipping fewer languages on purpose
+
+The onboarding screen lists fifteen languages. Two of them work.
+
+That was a deliberate call. Every language has an `available` flag, and flipping one on requires three things to exist: a teaching profile (native persona, a watchlist of common errors for that language, a beginner-gloss flag), a set of scenarios *authored in* that language, and the flag itself. A unit test enforces that every shipped scenario has a matching teaching profile, so you can't ship half of it.
+
+The temptation was obvious — the model will happily attempt French, so why not just turn it on? Because "attempt" isn't "teach well," and a language tutor that's subtly wrong is worse than one that says *coming soon*. The unavailable languages open a notify-me modal instead, which also tells me what to build next.
+
+Scenarios themselves are authored in the target language, but the *prompts* — the little instructions telling you what to attempt — are in English. "Greet the barista and ask for the menu," then the conversation happens in Spanish. Scaffolding in a language you have, practice in the one you don't.
+
+## Moving the database out of Next.js
+
+Nopala started as one Next.js app that owned everything: schema, migrations, GraphQL endpoint, UI. That's a fine place to start and a bad place to stay.
+
+A week in I split the backend into `nopala-nodejs` — **NestJS 11** with a code-first GraphQL schema, Drizzle over `postgres.js`, and `@clerk/backend` verifying the forwarded session token per request. It owns the schema and runs the migrations; the web app is becoming a pure frontend that calls it.
+
+The reason wasn't scale. It was **ownership**. Two codebases with a Drizzle schema each is two codebases that can disagree about what a table looks like, and the disagreement surfaces as a production error rather than a type error. One service defines the schema, one service migrates it, everyone else asks.
+
+A few things I hit on the way:
+
+- **Neon needs two connection strings.** The pooled URL for the app at runtime, the unpooled one for migrations. DDL through a PgBouncer pooler is unreliable, and the failure is intermittent enough that you'll blame your migration first.
+- **Derived stats are computed, never stored.** Streak and total minutes come from the sessions table on read. A stored counter is a counter that drifts, and there's no reconciliation job that's cheaper than just doing the sum.
+- **NestJS 11 runs Express 5**, which means the Apollo driver needs the Express 5 integration adapter or GraphQL simply doesn't mount at boot. The error message points at a package loader, not at Express.
+
+## Things I actually learned
+
+### Free beats good enough, until it doesn't
+
+On-device speech recognition costs nothing and works well in Chrome and Safari. The tradeoff isn't accuracy — it's that Firefox users get a text box. For a practice app, a silent second-class experience for one browser is a real product decision, not an implementation detail. I'd rather ship the fallback visibly than pretend the feature is universal.
+
+### Streaming changes what the product feels like
+
+The first version waited for the full reply and then dropped it in. It felt like a form submission. Streaming the partner's line token by token turned it into a conversation, and nothing about the model changed — only when the bytes arrived.
+
+### Verify the SDK, not your memory
+
+The AI SDK moved under me mid-project. `generateObject` is deprecated in favour of `generateText` with `Output.object`, and `maxTokens` became `maxOutputTokens`. I now read the docs shipped inside `node_modules` rather than trusting what I think the API looks like — the installed version is the only version that's true.
+
+## What's next
+
+The session-saving flow just landed, the community page is still static, and the progress screen is thinner than it should be. The bigger open question is whether scoring stays inline or moves behind the Node service so it can be persisted and trended over time — right now the feedback is excellent and ephemeral, which is exactly backwards for a product about improvement.
+
+## Try it
+
+Live: [nopala-web.vercel.app](https://nopala-web.vercel.app/)
+
+If you speak a language I haven't shipped yet and want to tell me what a good tutor in it sounds like, I'd genuinely like to hear it.

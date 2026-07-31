@@ -1,0 +1,78 @@
+---
+title: "Pace: Building a Running App That Works With No Signal"
+date: "2026-07-31"
+description: "A local-first running app in Expo and Go — why recording never touches the network, how the outbox sync drain is built, and the working agreements that came out of shipping it."
+tags: ["mobile", "go", "react-native", "projects"]
+---
+
+Pace is a running app for runners, hikers, and cyclists. Expo and React Native on the phone, Go and Postgres on the server. It's the most production-shaped thing I've built outside of work, and the whole architecture falls out of one sentence.
+
+## Recording never touches the network
+
+Running happens in canyons, on trails, abroad with data roaming off. If recording a run required the server, the product would fail exactly where people use it most.
+
+So the phone's SQLite database is the source of truth for your own runs, and the API is a replica plus a social layer. That single property decides almost everything downstream:
+
+- An outage degrades **sharing**, never the ability to record.
+- The client works fully offline, indefinitely, with no account at all.
+- Sync is a background concern, never a blocking step in any flow.
+- **The scaling risk lives on the phone**, not on the server. Recording generates zero server traffic; the server sees one small write when a run finishes.
+
+That last point is the one I keep coming back to. An hour of activity at 1 Hz is about 3,600 GPS points. Two hundred runs is 720,000 points for one person. A thousand people is 720 million rows — for data that is essentially never queried, only ever fetched whole.
+
+So a run gets split. The summary plus a simplified polyline — about 1 KB, everything the feed and list and map thumbnail need — goes to Postgres. The full track, around 40 KB gzipped, goes to object storage and is only fetched on export or when metrics get recomputed. Postgres then grows with the number of *runs*, not with seconds of running.
+
+## The stack
+
+**Phone:** Expo (SDK 57) + React Native + TypeScript, expo-router, SQLite via Drizzle, `jest-expo` and Testing Library for tests.
+
+**Server:** Go 1.25, Postgres on Supabase, `sqlc` for queries, `goose` for migrations, deployed to Fly.io in a distroless image.
+
+A few server decisions worth writing down:
+
+- **Migrations are embedded in the binary.** The image is distroless — no shell, nowhere to copy `.sql` files to — and embedding makes it impossible for a binary and the migrations it applies to come from different commits. The runner is its own binary, it holds a Postgres advisory lock so overlapping deploys serialize, and it runs as the release command before any new instance takes traffic. A failed migration fails the deploy instead of leaving half the fleet on a schema it doesn't understand.
+- **Use Supabase's session pooler, not the transaction pooler.** The service holds a long-lived `pgxpool`, and pgx uses prepared statements. Transaction-mode pooling discards them between transactions, which produces intermittent `prepared statement already exists` failures under concurrency that never once show up in local testing.
+- **`/health` returns the git SHA**, stamped at build time. It's how a deploy gets confirmed from outside rather than from a dashboard that says it succeeded.
+- **`/v1` is frozen once shipped.** Mobile clients sit on phones for months and can't be recalled. Breaking a released version breaks users who have no way to update.
+
+## The sync drain
+
+The outbox existed from the first day of the persistence layer — every mutation writes its row and its outbox entry in the same transaction, so a crash can't leave a change that never reaches the server. But for a while nothing consumed it. The columns for attempts and backoff and last error had no readers.
+
+Building the drain was the most interesting week of the project, because almost every rule in it is non-obvious and expensive to get wrong:
+
+- **In-flight runs never push.** An upsert for a run still recording or paused is skipped without burning an attempt. The wire has no way to say "unfinished," so pushing one would publish a partial run as history. Nothing is lost — finishing re-enqueues, and crash recovery finishes orphans at next launch.
+- **A deleted run's upsert is dropped, never sent.** The server's upsert *revives* a soft-deleted row. Delete has to win, and the drain enforces that a second time defensively, because the cost of the bug is a user watching the app ignore their decision.
+- **Claiming is pushing.** A run recorded signed-out has no user id, and it's claimed by whoever is signed in when it first syncs. Once stamped, the drain refuses to push it under any other account — signing into a second account must not quietly move the first account's history into it.
+- **Permanent failures park for a day; nothing is ever dropped.** A contract 400 or an ownership 404 will return the same answer to the same bytes from the same build, so hot retry is waste. But dropping the row silently loses a run's sync with nothing on any screen to say so. A 24-hour gate means an app update that fixes the contract gets its retry for free.
+- **Transient failures back off and halt the pass.** 30 seconds doubling to an hour, with equal jitter — never below half the delay, because full jitter can land near zero and turn an outage into a hot loop. The halt matters as much as the backoff: no network, a 5xx, a 429 describe *the world*, not the row, so every subsequent row would only re-prove the outage while burning its own attempts.
+
+Conflict handling stays simple because runs are single-owner and append-only. A run belongs to one person and doesn't change after it's saved, so genuine conflicts are rare. Every sync endpoint is idempotent, run ids are client-generated UUIDs, and writes are upserts — a retry can't duplicate or lose a run. That's the bug I'm most afraid of, because the data is irreplaceable.
+
+## Working agreements that came out of shipping
+
+These are written into the repo now. Each one exists because something went wrong.
+
+**A control either works or is visibly disabled.** "Sign up with email" ran the Google flow for three commits because it had no flow of its own yet. A placeholder that does the wrong thing is worse than one that does nothing — it looks finished, so nobody comes back to it, and the person who taps it is misled rather than merely blocked.
+
+**Fix the class, not the instance.** `SafeAreaView` reporting nothing inside a modal broke the header *and* the footer. The header got reported, fixed, and shipped; the footer surfaced an hour later as "the button is touching the edge of the screen" — a new bug report for the same bug.
+
+**Navigate when the destination is known.** Signing up with an existing address used to push the code screen, create the account there, and bounce to "you already have an account" a second later. A screen that appears, waits, and replaces itself reads as a glitch, and it is one. The account is created on the button now.
+
+**Say what was verified.** "Done" means exercised. If a change is unit-tested and has never made a real request or rendered on a device, that has to be said in those words. Four commits got called done before anything performed a single HTTP request.
+
+**One command is the gate.** `npm run check` does types, lint, tests, invariants, and an export of *both* platforms. It's one command because the steps that got skipped were always the last ones — and Android went unbundled by any check for a while purely because the export step named iOS.
+
+There's also a config verifier, which covers what no test can see: whether an auth provider is actually enabled, whether the redirect allow list matches, whether the deployed API reports the environment and commit it should. Dashboard state has cost more time on this project than any code defect, and "someone clicked Save" is not evidence.
+
+## Where it is now
+
+Recording works end to end: GPS capture, a metrics engine for distance, pace, splits, and elevation, crash recovery, and the sync drain behind it. Onboarding is four steps. The map follows you while you run and the recenter button finally does something. There are eight sports across two families. And the route builder landed — tap the map to drop waypoints, snap them to real trails through Mapbox Directions, save it, load it onto the record screen as a dashed line under your live trace.
+
+The test priority order is deliberately inverted from the usual instinct: the metrics engine first, then repositories and sync, then formatting helpers, then components. Those numbers *are* the product, and a silent error in them is unrecoverable. Pixels come last.
+
+## What I'd do differently
+
+- **Build the drain earlier.** The outbox sat with unread columns for long enough that I'd half-forgotten the invariants I'd designed into it.
+- **Write the config verifier on day one.** Every hour I lost to a dashboard toggle was an hour a script would have saved.
+- **Treat the CHANGELOG as a design tool.** Writing the user-visible sentence for a feature before building it kept surfacing controls that didn't actually keep their promise.

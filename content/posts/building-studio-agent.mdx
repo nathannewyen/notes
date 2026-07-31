@@ -1,0 +1,92 @@
+---
+title: "Studio Agent: What I Learned Building an Agent Platform From Scratch"
+date: "2026-07-31"
+description: "A FastAPI agent platform built around four pillars — orchestration, context engineering, observability, and evals — and the eval run that scored 2.4 out of 5 for all the wrong reasons."
+tags: ["ai", "python", "agents", "projects"]
+---
+
+[Studio Agent](https://github.com/nathannewyen/studio-agent) started as a question: what does it actually take to run agents in production, rather than in a notebook? Not "call a model in a loop" — that's an afternoon. I mean the parts that make an agent operable: knowing what it did, why it cost what it cost, and whether it's getting better or worse.
+
+So I built the platform around four pillars, and every feature has to belong to one of them:
+
+1. **Orchestration** — running the agent loop
+2. **Context engineering** — what goes into the window, and what it costs
+3. **Observability** — traces as a first-class object, not a log line
+4. **Evaluation** — is this thing any good, and how would I know
+
+## The shape of it
+
+A FastAPI backend with Postgres behind SQLAlchemy and Alembic, running in Docker, deployed on Render. A Next.js 16 frontend consumes it.
+
+The domain model is the whole design, really:
+
+```
+Agent    name, system_prompt, tools[], model, max_steps, version
+  └─ Trace     input, status
+       └─ Run        tokens, model_name, status
+            └─ RunStep    tool_call, input/output payload, latency_ms
+```
+
+An **Agent** is a row, not a class. Its model, system prompt, tool list, and step budget all live in the database, so changing an agent's behaviour is an update, not a deploy. A **Trace** is one request from the outside. A **Run** is one execution of the agent against it. A **RunStep** is one turn of the loop — the tool that was called, what went in, what came out, how long it took.
+
+That last table is the one that earns its keep. It means "why did the agent say that?" has an answer you can query rather than reconstruct.
+
+## Replacing my own loop with LangGraph
+
+The first engine was hand-rolled: a while loop, a tool registry with `web_search` and `fetch_page`, and manual message accumulation. It worked, and writing it was the right call — I understood every part of the control flow because I'd typed it.
+
+Then I replaced it with a LangGraph `StateGraph`. The state carries the message list, the step counter, input and output token counts, and the stop reason. What I got back was the boring stuff I'd been reimplementing badly: message reduction, clean termination conditions, and a graph I could look at instead of a loop I had to trace by hand.
+
+The general lesson: build it once yourself so you know what the framework is doing, then let the framework do it.
+
+## Prompt caching is a layout problem
+
+This is the piece I'd most want to tell past-me about. Anthropic's prompt caching gives roughly a 90% discount on cached input, but *where* you put the cache breakpoints decides whether you get it.
+
+Two things are happening at once:
+
+**The stable prefix gets one marker.** The request is assembled as tools, then system prompt, then messages. So a cache marker on the system prompt also covers the tool definitions above it — tools and system prompt never change within a run, so after the first call they're a guaranteed hit on every subsequent call.
+
+**The growing tail gets a rolling marker.** Each loop iteration appends an assistant message and its tool results, and the *entire* history is re-sent on every call. Marking the newest message says "cache everything up to here," so the next call reads that whole prefix at a discount. But the API allows at most four cache control blocks per request, so stale markers from earlier iterations have to be stripped first — which is fine, because the newest marker's prefix covers everything before it anyway.
+
+Nothing about that is in the model. It's all in how you lay out the request, and it's the difference between an agent that costs a little and one that costs a lot.
+
+## The eval run that scored 2.4
+
+I built an eval harness with an LLM judge grading answers on faithfulness to evidence, 1 to 5. The clever part — I thought — was that the judge doesn't just see the answer. It sees the actual tool outputs pulled from `run_steps`, so it's grading "is every claim supported by what the agent actually found" rather than "does this sound right."
+
+First real run averaged **2.4 out of 5**. Four of the low scores read like this:
+
+> The agent fabricates future dates and non-existent announcements, demonstrating hallucination rather than providing genuine recent information.
+
+> Next.js 16.2.10 does not exist as of the knowledge cutoff date (April 2024), when the latest stable version was 14.x or early 15.x.
+
+The agent hadn't hallucinated anything. It had searched the live web and come back with real, current information — and the judge marked it wrong because the judge's training data predated the evidence sitting right there in the prompt.
+
+I'd even anticipated this. The judge prompt says, in capital letters, that the agent's knowledge is more current and not to penalize newer facts. It did anyway. A model's priors beat an instruction not to use them, reliably, and the more confident the prior the harder it wins.
+
+That's the most useful thing this project has taught me so far:
+
+- **An eval score is a measurement of the judge as much as the subject.** A 2.4 that's really a cutoff mismatch is worse than no score, because it looks actionable.
+- **Judging a retrieval agent needs a judge that can't out-argue the retrieval.** Either constrain it to pure entailment against the evidence, or accept that recency questions need a human.
+- **Keeping the evidence in the database was the thing that saved me.** Because every tool call was persisted as a run step, I could read what the agent actually saw and prove the judge wrong. Without the traces I'd have "the agent hallucinates" as a finding and spent a week fixing a bug that didn't exist.
+
+Observability paid for itself the first time the evals lied.
+
+## The frontend, and the gap it found
+
+`agent-studio-ui` is Next.js 16 with React 19 and shadcn components. The centrepiece is a transparency panel: for a given run, every step rendered as a card — which tool, what it was given, what it returned, how long it took. It's the pillar-three idea made visible.
+
+Building it immediately exposed something the backend tests never would have: **there are no list endpoints.** You can create, get, update, and delete an agent by id, and you can run one. You cannot ask "what agents exist," or "show me recent traces." Every one of those is trivially a query the database already supports, and every one of them was missing because nothing had asked yet.
+
+Writing the UI is how you find out which API you actually designed.
+
+## What's next
+
+The honest list: list endpoints, an eval harness whose judge I trust, and streaming so a run isn't a spinner until it's finished. Longer term, the version column on the agent row is currently decorative — the interesting version of this platform is one where you can change a prompt, re-run the eval set against both versions, and see the diff.
+
+Which is, more or less, the whole reason I started building it.
+
+## Code
+
+Backend and frontend: [github.com/nathannewyen/studio-agent](https://github.com/nathannewyen/studio-agent) · [live UI](https://agent-studio-ui-chi.vercel.app/)
